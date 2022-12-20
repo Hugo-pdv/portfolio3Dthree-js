@@ -1,77 +1,140 @@
-import * as THREE from 'three'
-import './style.css'
+import './style.css';
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+const spaceImage = new URL('/space.jpg', import.meta.url).href
+// Setup
 
-// state
-let cubeSize = 0
-let width = 0
-let height = 0
-let cubeActive = false
-let intersects = []
+const scene = new THREE.Scene();
 
-// setup
-const scene = new THREE.Scene()
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-camera.position.z = 5
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
-renderer.toneMapping = THREE.ACESFilmicToneMapping
-renderer.outputEncoding = THREE.sRGBEncoding
-document.getElementById('root').appendChild(renderer.domElement)
-const raycaster = new THREE.Raycaster()
-const mouse = new THREE.Vector2()
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-// view
-const geometry = new THREE.BoxGeometry()
-const material = new THREE.MeshStandardMaterial({ color: new THREE.Color('orange'), opacity: 0.2 })
-const cube = new THREE.Mesh(geometry, material)
-scene.add(cube)
+const renderer = new THREE.WebGLRenderer({
+  canvas: document.querySelector('#bg'),
+});
 
-const ambientLight = new THREE.AmbientLight()
-const pointLight = new THREE.PointLight()
-pointLight.position.set(10, 10, 10)
-scene.add(ambientLight)
-scene.add(pointLight)
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(window.innerWidth, window.innerHeight);
+camera.position.setZ(30);
+camera.position.setX(-3);
 
-// responsive
-function resize() {
-  width = window.innerWidth
-  height = window.innerHeight
-  camera.aspect = width / height
-  const target = new THREE.Vector3(0, 0, 0)
-  const distance = camera.position.distanceTo(target)
-  const fov = (camera.fov * Math.PI) / 180
-  const viewportHeight = 2 * Math.tan(fov / 2) * distance
-  camera.updateProjectionMatrix()
-  renderer.setSize(width, height)
-  cubeSize = (viewportHeight * camera.aspect) / 5
-  cube.scale.set(...(cubeActive ? [cubeSize * 1.5, cubeSize * 1.5, cubeSize * 1.5] : [cubeSize, cubeSize, cubeSize]))
+renderer.render(scene, camera);
+
+// Torus
+
+const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
+const material = new THREE.MeshStandardMaterial({ color: 0xff6347 });
+const torus = new THREE.Mesh(geometry, material);
+
+scene.add(torus);
+
+// Lights
+
+const pointLight = new THREE.PointLight(0xffffff);
+pointLight.position.set(5, 5, 5);
+
+const ambientLight = new THREE.AmbientLight(0xffffff);
+scene.add(pointLight, ambientLight);
+
+// Helpers
+
+// const lightHelper = new THREE.PointLightHelper(pointLight)
+// const gridHelper = new THREE.GridHelper(200, 50);
+// scene.add(lightHelper, gridHelper)
+
+// const controls = new OrbitControls(camera, renderer.domElement);
+
+function addStar() {
+  const geometry = new THREE.SphereGeometry(0.25, 24, 24);
+  const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
+  const star = new THREE.Mesh(geometry, material);
+
+  const [x, y, z] = Array(3)
+    .fill()
+    .map(() => THREE.MathUtils.randFloatSpread(100));
+
+  star.position.set(x, y, z);
+  scene.add(star);
 }
 
-window.addEventListener('resize', resize)
-resize()
+Array(200).fill().forEach(addStar);
 
-// events
-window.addEventListener('mousemove', (e) => {
-  mouse.set((e.clientX / width) * 2 - 1, -(e.clientY / height) * 2 + 1)
-  raycaster.setFromCamera(mouse, camera)
-  intersects = raycaster.intersectObjects(scene.children)
-  const findCube = intersects.find((hit) => hit.object === cube)
-  cube.material.color.set(findCube ? 'hotpink' : 'orange')
-})
+// Background
 
-window.addEventListener('click', (e) => {
-  const findCube = intersects.find((hit) => hit.object === cube)
-  if (findCube) {
-    cubeActive = !cubeActive
-    cube.scale.set(...(cubeActive ? [cubeSize * 1.5, cubeSize * 1.5, cubeSize * 1.5] : [cubeSize, cubeSize, cubeSize]))
-  }
-})
+const spaceTexture = new THREE.TextureLoader().load(spaceImage);
+scene.background = spaceTexture;
 
-// render-loop
+// Avatar
+
+const   hugoTexture = new THREE.TextureLoader().load('/hugo.jpg');
+
+const   hugo = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map:   hugoTexture }));
+
+scene.add(  hugo);
+
+// Moon
+
+const moonTexture = new THREE.TextureLoader().load('/moon.jpg');
+const normalTexture = new THREE.TextureLoader().load('/normal.jpg');
+
+const moon = new THREE.Mesh(
+  new THREE.SphereGeometry(3, 32, 32),
+  new THREE.MeshStandardMaterial({
+    map: moonTexture,
+    normalMap: normalTexture,
+  })
+);
+
+const linkedinLogo = document.getElementById("linkedin-logo");
+const githubLogo = document.getElementById("github-logo");
+
+
+
+const Linkedin = new THREE.Mesh(
+  new THREE.BoxGeometry(1, 1, 1),
+  new THREE.MeshBasicMaterial({ color: 0x0077B5 }));
+
+scene.add(Linkedin);
+scene.add(moon);
+
+moon.position.z = 30;
+moon.position.setX(-10);
+
+  hugo.position.z = -5;
+  hugo.position.x = 2;
+
+// Scroll Animation
+
+function moveCamera() {
+  const t = document.body.getBoundingClientRect().top;
+  moon.rotation.x += 0.05;
+  moon.rotation.y += 0.075;
+  moon.rotation.z += 0.05;
+
+    hugo.rotation.y += 0.01;
+    hugo.rotation.z += 0.01;
+
+  camera.position.z = t * -0.01;
+  camera.position.x = t * -0.0002;
+  camera.rotation.y = t * -0.0002;
+}
+
+document.body.onscroll = moveCamera;
+moveCamera();
+
+// Animation Loop
+
 function animate() {
-  requestAnimationFrame(animate)
-  cube.rotation.x = cube.rotation.y += 0.01
-  renderer.render(scene, camera)
+  requestAnimationFrame(animate);
+
+  torus.rotation.x += 0.01;
+  torus.rotation.y += 0.005;
+  torus.rotation.z += 0.01;
+
+  moon.rotation.x += 0.005;
+
+  // controls.update();
+
+  renderer.render(scene, camera);
 }
 
-animate()
-
+animate();
