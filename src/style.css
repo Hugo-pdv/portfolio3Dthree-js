@@ -117,3 +117,7 @@ blockquote p {
 	              0 20px 20px rgba(0,0,0,.3);
   
 }
+
+.titreformation {
+  text-shadow:2px 2px 0 blue
+}
