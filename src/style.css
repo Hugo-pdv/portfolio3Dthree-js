@@ -107,7 +107,7 @@ body {
 
   /* Appliquer une taille de police de 16 pixels au texte du bouton */
   button {
-    font-size: 26px;
+    font-size: 20px;
   }
 
   /* Ajouter un petit logo d'ouverture de fichier à côté du texte du bouton */
