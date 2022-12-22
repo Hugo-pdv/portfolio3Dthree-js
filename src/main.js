@@ -84,17 +84,17 @@ const moon = new THREE.Mesh(
   })
 );
 
-const linkedinLogo = document.getElementById("linkedin-logo");
-const githubLogo = document.getElementById("github-logo");
+// const linkedinLogo = document.getElementById("linkedin-logo");
+// const githubLogo = document.getElementById("github-logo");
 
 
 
-const Linkedin = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ color: 0x0077B5 }));
+// const Linkedin = new THREE.Mesh(
+//   new THREE.BoxGeometry(1, 1, 1),
+//   new THREE.MeshBasicMaterial({ color: 0x0077B5 }));
 
-scene.add(Linkedin);
-scene.add(moon);
+// scene.add(Linkedin);
+// scene.add(moon);
 
 moon.position.z = 30;
 moon.position.setX(-10);
