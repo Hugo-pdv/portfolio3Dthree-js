@@ -5,6 +5,11 @@ canvas {
     left: 0;
 }
 
+body {
+  overflow-x: hidden;
+}
+
+
 :root {
     --dark-bg: rgba(15, 15, 15, 0.95);
     --spacing: 350px;
@@ -75,40 +80,17 @@ blockquote p {
     grid-column: 6 / 12;
 }
 
-body {
-    overflow-x: hidden;
-}
 
 
-  /* Appliquer une bordure blanche et fine au bouton */
   button {
+    font-family: sans-serif;
+    font-size: 20px;
+    color: white;
+    background-color: #333333;
+    border-radius: 5px;
     border: 1px solid white;
   }
 
-  /* Appliquer un arrondi de 5 pixels aux coins du bouton */
-  button {
-    border-radius: 5px;
-  }
-
-  /* Appliquer un fond gris foncé au bouton */
-  button {
-    background-color: #333333;
-  }
-
-  /* Appliquer une couleur blanche au texte du bouton */
-  button {
-    color: white;
-  }
-
-  /* Appliquer une police de caractères sans-serif au texte du bouton */
-  button {
-    font-family: sans-serif;
-  }
-
-  /* Appliquer une taille de police de 16 pixels au texte du bouton */
-  button {
-    font-size: 20px;
-  }
 
   /* Ajouter un petit logo d'ouverture de fichier à côté du texte du bouton */
   .my-button::before {
@@ -118,7 +100,20 @@ body {
     font-weight: 900;
   }
 
-  .titreformation {
-    text-shadow:2px 2px 0 blue
-  }
+
+.textdim {
+
+  text-shadow:     0 1px 0 rgb(21, 224, 191),
+	                 0 2px 0 rgba(175, 182, 182, 0),
+	                 0 3px 0 rgb(4, 4, 185),
+	                 0 4px 0 rgb(13, 11, 182),
+	                 0 5px 0 rgb(21, 224, 191),
+	
+	                 0 0 5px rgba(0,0,0,.05),
+	                0 1px 3px rgba(0,0,0,.2),
+	                0 3px 5px rgba(0,0,0,.2),
+	               0 5px 10px rgba(0,0,0,.2),
+	              0 10px 10px rgba(0,0,0,.2),
+	              0 20px 20px rgba(0,0,0,.3);
   
+}
