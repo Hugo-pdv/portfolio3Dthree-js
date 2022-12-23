@@ -2,6 +2,11 @@ import './style.css';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 const spaceImage = new URL('/space.jpg', import.meta.url).href
+
+
+
+
+
 // Setup
 
 const scene = new THREE.Scene();
@@ -138,3 +143,17 @@ function animate() {
 }
 
 animate();
+
+function onWindowResize() {
+
+  const canvasWidth = window.innerWidth;
+  const canvasHeight = window.innerHeight;
+
+  renderer.setSize( canvasWidth, canvasHeight );
+
+  camera.aspect = canvasWidth / canvasHeight;
+  camera.updateProjectionMatrix();
+
+}
+
+window.addEventListener( 'resize', onWindowResize );
