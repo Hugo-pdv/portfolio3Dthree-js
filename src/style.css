@@ -53,6 +53,9 @@ header {
     margin-bottom: var(--spacing);
 }
 
+:root {
+  --dark-bg: rgba(0, 0, 0, 0.55);
+}
 section {
     grid-column: 2 / 8;
     padding: 1rem;

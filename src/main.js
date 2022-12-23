@@ -112,8 +112,8 @@ moon.position.setX(-10);
 function moveCamera() {
   const t = document.body.getBoundingClientRect().top;
   moon.rotation.x += 0.05;
-  moon.rotation.y += 0.075;
-  moon.rotation.z += 0.05;
+  moon.rotation.y += 0.0075;
+  moon.rotation.z += 0.0075;
 
     hugo.rotation.y += 0.01;
     hugo.rotation.z += 0.01;
