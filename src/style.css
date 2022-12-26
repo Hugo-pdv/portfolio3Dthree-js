@@ -80,7 +80,9 @@ blockquote p {
 }
 
 .left {
+  margin-top:-100px;
     grid-column: 6 / 12;
+    margin-bottom: 50px;
 }
 
 
@@ -123,4 +125,25 @@ blockquote p {
 
 .titreformation {
   text-shadow:2px 2px 0 blue
+}
+
+
+@media only screen and (max-width:500px) {
+  section {
+    width: 22.5rem
+  }
+  blockquote p {
+    font-size: 100%;
+  }
+  .left {
+    grid-column: 2 / 8;;
+  }
+  header, header h1, header p {
+    font-size: 1.5rem;
+    width:100%;
+  }
+  header {
+    margin-bottom: var(--spacing);
+  }
+
 }
