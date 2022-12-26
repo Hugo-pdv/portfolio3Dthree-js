@@ -129,8 +129,12 @@ blockquote p {
 
 
 @media only screen and (max-width:500px) {
+  body {
+    overflow-x: hidden;
+  }
+
   section {
-    width: 22.5rem
+    width: 21rem
   }
   blockquote p {
     font-size: 100%;
@@ -143,7 +147,15 @@ blockquote p {
     width:100%;
   }
   header {
-    margin-bottom: var(--spacing);
+    margin-bottom: 70%;
+
   }
 
+}
+
+@media only screen and (max-width:500px) and (min-height: 700px) {
+  header {
+    margin-bottom: 120%;
+
+  }
 }
